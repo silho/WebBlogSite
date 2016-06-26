@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd ">
+	<!-- 自导扫描与装配bean 包含子包 -->
+	<context:component-scan base-package="com.weblog"></context:component-scan>
+
+	<!-- 配置SessionFactory -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+		<property name="dataSource">
+			<bean class="com.mchange.v2.c3p0.ComboPooledDataSource">
+				<!-- 数据库连接信息 4项 -->
+				<property name="jdbcUrl" value="${jdbcUrl}"></property>
+				<property name="driverClass" value="${driverClass}"></property>
+				<property name="user" value="${user}"></property>
+				<property name="password" value="${password}"></property>
+				<!-- 其他配置 -->
+				<property name="initialPoolSize" value="3"></property>
+				<property name="maxPoolSize" value="5"></property>
+				<property name="minPoolSize" value="3"></property>
+				<property name="acquireIncrement" value="2"></property>
+				<property name="maxStatements" value="8"></property>
+				<property name="maxStatementsPerConnection" value="5"></property>
+				<property name="maxIdleTime" value="20"></property>
+			</bean>
+		</property>
+	</bean>
+	<!-- 配置声明式事务管理（采用注解的方式） 需要指定事务名称 -->
+	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="txManager"/>
+</beans>

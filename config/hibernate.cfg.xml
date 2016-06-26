@@ -1,0 +1,26 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- 1.数据库连接信息 -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<!-- 找连接池 不需要这里的这些配置
+		<property name="connection.url">jdbc:mysql:///itcastoa0720</property>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.username">root</property>
+		<property name="hibernate.connection.password">root</property>
+		 -->
+		
+		<!-- 2.其它配置  自动建表 显示SQL语句。。 -->
+		<property name="show_sql">true</property>
+		<property name="hbm2ddl.auto">update</property>
+
+		<!--3.导入映射文件 -->
+		<mapping resource="com/weblog/domain/User.hbm.xml"/>
+		<mapping resource="com/weblog/domain/ArticleClass.hbm.xml"/>
+		<mapping resource="com/weblog/domain/Article.hbm.xml"/>
+		<mapping resource="com/weblog/domain/Critique.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>

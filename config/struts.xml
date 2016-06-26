@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<!-- 配置为开发模式 修改了不用重启 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 把扩展名配置为action -->
+	<constant name="struts.action.extension" value="action" />
+	<!-- 把主题配置为simple 不再使用struts的标签 -->
+	<constant name="struts.ui.theme" value="simple"></constant>
+
+
+
+
+	<package name="default" namespace="/" extends="struts-default">
+		<!-- 配置测试用的Action 还未整合 -->
+		<action name="test" class="testAction">
+			<!-- 与spring整合后class属性可以写bean的名称 -->
+			<result name="success">/WEB-INF/jsp/testwrite.jsp</result>
+		</action>
+		<action name="searchin" class="searchAction">
+			<result name="success">/WEB-INF/jsp/index.jsp</result>
+		</action>
+
+		<action name="index" class="indexAction" method="index">
+			<result name="index">/WEB-INF/jsp/index.jsp</result>
+		</action>
+
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="registUI">/WEB-INF/jsp/register.jsp</result>
+			<result name="regist">/WEB-INF/jsp/login.jsp</result>
+			<result name="input">/WEB-INF/jsp/register.jsp</result>
+
+			<result name="loginUI">/WEB-INF/jsp/login.jsp</result>
+			<result name="logout" type="redirectAction">index</result>
+			<result name="index" >/WEB-INF/jsp/blogs.jsp</result>
+			<result name="toIndex" type="redirectAction">user_index</result>
+		</action>
+		<action name="articleClass_*" class="articleClassAction"
+			method="{1}">
+			<result name="list">/WEB-INF/jsp/articleClassAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/articleClassAction/saveUI.jsp
+			</result>
+			<result name="toList" type="redirectAction">articleClass_list
+			</result>
+		</action>
+		<action name="article_*" class="articleAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/articleAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/write.jsp
+			</result>
+			<result name="seeUI">/WEB-INF/jsp/reding.jsp
+			</result>
+			<result name="search">/WEB-INF/jsp/search.jsp
+			</result>
+			<result name="toIndex" type="redirectAction">user_index</result>
+			<result name="toseeUI" type="chain">article_seeUI</result>
+		</action>
+		<!--  旧信息
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="registUI">/WEB-INF/jsp/userAction/registUI.jsp</result>
+			<result name="regist">/WEB-INF/jsp/userAction/regist.jsp
+			</result>
+			<result name="input">/WEB-INF/jsp/userAction/registUI.jsp</result>
+			<result name="loginUI">/WEB-INF/jsp/userAction/loginUI.jsp</result>
+			<result name="logout">/WEB-INF/jsp/userAction/logout.jsp</result>
+			<result name="index">/WEB-INF/jsp/userAction/index.jsp</result>
+			<result name="toIndex" type="redirectAction">user_index</result>
+		</action>
+		<action name="articleClass_*" class="articleClassAction"
+			method="{1}">
+			<result name="list">/WEB-INF/jsp/articleClassAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/articleClassAction/saveUI.jsp
+			</result>
+			<result name="toList" type="redirectAction">articleClass_list
+			</result>
+		</action>
+		<action name="article_*" class="articleAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/articleAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/articleAction/saveUI.jsp
+			</result>
+			<result name="seeUI">/WEB-INF/jsp/articleAction/seeUI.jsp
+			</result>
+			<result name="toIndex" type="redirectAction">user_index</result>
+			<result name="toseeUI" type="chain">article_seeUI</result>
+		</action>
+		-->
+
+	</package>
+
+
+
+
+</struts>
